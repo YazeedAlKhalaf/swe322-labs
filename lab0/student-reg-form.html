@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Registration Form</title>
+
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      main {
+        max-width: 786px;
+        margin: auto;
+        background-color: #144f69;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+
+      input,
+      select {
+        display: block;
+        margin-bottom: 10px;
+
+        border: 1px solid #ccc;
+        border-radius: 1rem;
+        padding: 0.5rem;
+        font-size: 1.5rem;
+        background-color: #ebebeb;
+      }
+
+      label {
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.25rem;
+      }
+
+      button {
+        display: block;
+        margin-top: 10px;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 1.5rem;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form method="POST" action="#">
+      <main>
+        <h1>Student Registration Form</h1>
+
+        <label for="full-name">Full Name:</label>
+        <input type="text" name="full-name" required />
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required />
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" name="dob" required />
+
+        <label for="traning-class">Training Class:</label>
+        <select name="traning-class" required>
+          <option value="default" selected disabled>
+            Select a training class
+          </option>
+          <option value="web-development">Web Development</option>
+          <option value="data-science">Data Science</option>
+          <option value="programming-fundamentals">
+            Programming Fundamentals
+          </option>
+        </select>
+
+        <button type="submit">Register</button>
+      </main>
+    </form>
+  </body>
+</html>

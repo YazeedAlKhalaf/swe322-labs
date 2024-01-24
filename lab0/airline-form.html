@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Airline Ticket Purchase Form</title>
+
+    <style>
+        body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      main {
+        max-width: 786px;
+        margin: auto;
+        background-color: #144f69;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 1rem;
+      }
+
+      input,
+      select {
+        display: block;
+        margin: 0.25rem 0;
+        margin-bottom: 1rem;
+
+        border: 1px solid #ccc;
+        border-radius: 1rem;
+        padding: 0.5rem;
+        font-size: 1.5rem;
+        background-color: #ebebeb;
+      }
+
+      label {
+        font-weight: bold;
+        font-size: 1rem;
+        padding: 0.25rem;
+        margin: 0.25rem;
+      }
+
+      button {
+        display: block;
+        margin-top: 10px;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 1.5rem;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+        <h1>Airline Ticket Purchase Form &#9992</h1>
+
+    <form method="POST" action=""#>
+        <label for="full-name">Full Name:</label>
+        <input type="text" name="full-name" required placeholder="Your Name :)" />
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" required placeholder="test@example.com" />
+
+        <label for="phone-number">Phone Number:</label>
+        <input type="text" name="phone-number" required placeholder="05xxxxxxxx" />
+
+        <label for="departure-city">Departure City:</label>
+        <input type="text" name="departure-city" required placeholder="" />
+
+        <label for="destination-city">Destination City:</label>
+        <input type="text" name="destination-city" required placeholder="" />
+
+        <label for="departure-date">Departure Date:</label>
+        <input type="date" name="departure-date" required />
+
+        <label for="tickets-count">Number of Tickets:</label>
+        <input type="number" name="tickets-count" required />
+
+        <button type="submit">Register</button>
+    </form>
+    </main>
+  </body>
+</html>
