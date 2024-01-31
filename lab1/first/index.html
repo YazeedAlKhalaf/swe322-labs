@@ -37,8 +37,16 @@
       <label for="last_name">Last Name: </label>
       <input name="last_name" type="text" placeholder="your last name" />
 
-      <label for="dob">DOB: </label>
-      <input name="dob" type="date" />
+      <div style="">
+        <label for="dob">DOB: </label>
+        <input name="dob" type="date" />
+
+        <select name="gender">
+          <option value="default" selected>Gender</option>
+          <option value="default">Male</option>
+          <option value="default">Female</option>
+        </select>
+      </div>
 
       <label for="email">Email: </label>
       <input name="email" type="email" placeholder="you@yourdomain.com" />
@@ -56,7 +64,7 @@
           Billing Address
         </legend>
 
-        <div style="display: flex; gap: 4px">
+        <div style="display: flex; gap: 4px; margin-bottom: 8px">
           <label for="street">Street: </label>
           <input name="street" type="text" />
         </div>
