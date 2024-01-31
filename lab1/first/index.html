@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comment Form</title>
+
+    <style>
+      main {
+        background-color: lightgray;
+        flex-direction: column;
+        padding: 16px;
+        max-width: 768px;
+        margin: auto;
+      }
+
+      main > input,
+      label {
+        display: block;
+      }
+
+      main > input {
+        margin-bottom: 16px;
+      }
+
+      label:has(+ input:required):after {
+        content: " *";
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <label for="first_name">First Name: </label>
+      <input name="first_name" type="text" placeholder="your first name" />
+
+      <label for="last_name">Last Name: </label>
+      <input name="last_name" type="text" placeholder="your last name" />
+
+      <label for="dob">DOB: </label>
+      <input name="dob" type="date" />
+
+      <label for="email">Email: </label>
+      <input name="email" type="email" placeholder="you@yourdomain.com" />
+
+      <fieldset style="border: 3px solid red; margin-bottom: 16px">
+        <legend
+          style="
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          "
+        >
+          Billing Address
+        </legend>
+
+        <div style="display: flex; gap: 4px">
+          <label for="street">Street: </label>
+          <input name="street" type="text" />
+        </div>
+
+        <div style="display: flex; gap: 4px; flex-wrap: wrap">
+          <label for="city">City: </label>
+          <input name="city" type="text" />
+
+          <label for="state">State: </label>
+          <input name="state" type="text" />
+
+          <label for="zip">Zip: </label>
+          <input name="zip" type="text" />
+        </div>
+      </fieldset>
+
+      <label for="rating">Rating (1-10): </label>
+      <input name="rating" type="range" min="0" max="10" value="4" required />
+
+      <label for="comments">Comments: </label>
+      <textarea
+        name="comments"
+        type="text"
+        placeholder="any comments are valuable to us"
+        required
+      ></textarea>
+
+      <br />
+
+      <button type="submit">Submit</button>
+    </main>
+  </body>
+</html>
