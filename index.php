@@ -16,9 +16,9 @@
 
     <main class="p-4 flex-1">
         <ul class="list-disc">
-            <li><a href="lab0">lab0</a></li>
-            <li><a href="lab1">lab1</a></li>
-            <li><a href="test">test</a></li>
+            <li><a href="lab0/">lab0</a></li>
+            <li><a href="lab1/">lab1</a></li>
+            <li><a href="test/">test</a></li>
         </ul>
     </main>
 
