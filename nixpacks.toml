@@ -1,0 +1,6 @@
+providers = ['php']
+
+[staticAssets]
+book = '''
+  book.pdf
+'''
