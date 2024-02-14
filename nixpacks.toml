@@ -49,12 +49,14 @@ http {
         $if(IS_LARAVEL) (
             location / {
                 try_files $uri $uri/ /index.php?$query_string;
+                autoindex on;
             }
         ) else ()
         
         $if(NIXPACKS_PHP_FALLBACK_PATH) (
           location / {
             try_files $uri $uri/ ${NIXPACKS_PHP_FALLBACK_PATH}?$query_string;
+            autoindex on;
           }
         ) else ()
      
