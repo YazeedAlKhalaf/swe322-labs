@@ -7,9 +7,6 @@
     <title>Question 3</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-    </style>
 </head>
 
 <body>
