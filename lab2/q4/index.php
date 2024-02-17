@@ -18,73 +18,50 @@ function insertionSort(array $array, bool $isAsc = true): array
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Question 4</title>
-
+    <title>Array Manipulation</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <h1 class="text-2xl font-bold">Array Manipulation</h1>
-    <br />
+<body class="p-4">
+    <h1 class="text-2xl font-bold text-center mb-4">Array Manipulation</h1>
 
-    <?php
-    $numbers = array(10, 40, 50, 100, 80, 90, 30, 60);
+    <div class="flex flex-row flex-wrap gap-4 justify-center items-start">
+        <?php
+        $numbers = array(10, 40, 50, 100, 80, 90, 30, 60);
 
-    $array_sum = 0;
-    foreach ($numbers as $n) {
-        $array_sum += $n;
-    }
+        $array_sum = 0;
+        foreach ($numbers as $n) {
+            $array_sum += $n;
+        }
 
-    $array_average = $array_sum / count($numbers);
-    $sorted_array_asc = insertionSort($numbers, true);
-    $sorted_array_desc = insertionSort($numbers, false);;
-    $reversed_array = array_reverse($numbers);
+        $array_average = $array_sum / count($numbers);
+        $sorted_array_asc = insertionSort($numbers, true);
+        $sorted_array_desc = insertionSort($numbers, false);
+        $reversed_array = array_reverse($numbers);
 
-    echo "<hr/>";
+        $data = [
+            'Original Array' => $numbers,
+            'Array Sum' => $array_sum,
+            'Array Average' => $array_average,
+            'Sorted Array Asc' => $sorted_array_asc,
+            'Sorted Array Desc' => $sorted_array_desc,
+            'Reversed Array' => $reversed_array,
+        ];
 
-    echo "<h2>Original Array: <pre>";
-    print_r($numbers);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-
-    echo "<h2>Array Sum: <pre>";
-    print_r($array_sum);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-
-    echo "<h2>Array Average: <pre>";
-    print_r($array_average);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-
-    echo "<h2>Sorted Array Asc: <pre>";
-    print_r($sorted_array_asc);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-
-    echo "<h2>Sorted Array Desc: <pre>";
-    print_r($sorted_array_desc);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-
-    echo "<h2>Revered Array: <pre>";
-    print_r($reversed_array);
-    echo "</pre></h2>";
-
-    echo "<hr/>";
-    ?>
+        foreach ($data as $title => $value) {
+            echo "<div class='bg-gray-100 p-4 rounded shadow'>";
+            echo "<h2 class='font-semibold'>$title:</h2>";
+            echo "<pre>" . print_r($value, true) . "</pre>";
+            echo "</div>";
+        }
+        ?>
+    </div>
 </body>
 
 </html>
