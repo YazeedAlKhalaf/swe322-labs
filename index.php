@@ -16,10 +16,11 @@
 
     <main class="p-4 flex-1">
         <ul class="list-disc">
-            <li><a href="test/">test</a></li>
-            <li><a href="lab0/index.html">lab0</a></li>
-            <li><a href="lab1/">lab1</a></li>
-            <li><a href="lab2/">lab2</a></li>
+            <li><a href="test/">Test</a></li>
+            <li><a href="lab0/index.html">Lab 0</a></li>
+            <li><a href="lab1/">Lab 1</a></li>
+            <li><a href="lab2/">Lab 2</a></li>
+            <li><a href="lab3/">Lab 3</a></li>
         </ul>
     </main>
 
