@@ -34,7 +34,7 @@
             <label for="clothes_type">Select Clothes Type:</label>
             <select name="clothes_type" id="clothes_type" class="border-2 border-gray-500 rounded-md p-1" required>
                 <option value="default" selected disabled>Select Clothes Type</option>
-                <?php require 'clothes_type.php';
+                <?php require 'clothes_price.php';
                 foreach ($clothes_price as $clothes_price => $price) {
                     echo "<option value=\"$clothes\">$clothes \$$price</option>";
                 }
