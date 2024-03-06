@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q2: Student Information</title>
+
+    <link rel="stylesheet" href="../shared.css">
+</head>
+
+<body>
+    <h1 style="text-decoration-line: underline;">Student Information</h1>
+
+    <form action="display.php" method="post" class="spaced-form">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+        </div>
+
+        <div>
+            <label for="snumber">Student Number:</label>
+            <input type="text" id="snumber" name="snumber" required />
+        </div>
+
+        <div>
+            <label for="gpa">GPA (out of 100):</label>
+            <input type="number" step="0.1" min="0" max="100" id="gpa" name="gpa" required />
+        </div>
+
+        <div>
+            <button type="submit">PROCEED</button>
+        </div>
+    </form>
+</body>
+
+</html>

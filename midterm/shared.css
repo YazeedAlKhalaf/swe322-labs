@@ -1,0 +1,9 @@
+* {
+    font-family: Tahoma, Verdana, sans-serif;
+}
+
+.spaced-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
