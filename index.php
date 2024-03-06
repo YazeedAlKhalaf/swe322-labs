@@ -21,6 +21,7 @@
             <li><a href="lab1/">Lab 1</a></li>
             <li><a href="lab2/">Lab 2</a></li>
             <li><a href="lab3/">Lab 3</a></li>
+            <li><a href="midterm/">Midterm</a></li>
         </ul>
     </main>
 
