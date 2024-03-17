@@ -31,23 +31,30 @@ $total = 0;
 if ($food == "pizza") {
     $price = get_pizza_prize($pizza_size);
     $total = $price * $quantity;
-} else if ($food == "burger" or $food == "pasta") {
-    $total = 15 * $quantity;
+} else if ($food == "burger") {
+    $total = 12 * $quantity;
+} else if ($food == "pasta") {
+    $total = 8 * $quantity;
 }
 
-if ($toppings == "cheese") {
-    $toppings_price = 3 * $quantity;
-    $total = $total + $toppings_price;
-}
+foreach ($toppings as $top) {
+    if ($top == "cheese") {
+        $toppings_price = 3 * $quantity;
+        $total = $total + $toppings_price;
+        unset($toppings_price);
+    }
 
-if ($toppings == "pepperoni") {
-    $toppings_price = 2 * $quantity;
-    $total = $total + $toppings_price;
-}
+    if ($top == "pepperoni") {
+        $toppings_price = 2 * $quantity;
+        $total = $total + $toppings_price;
+        unset($toppings_price);
+    }
 
-if ($toppings == "mushrooms") {
-    $toppings_price = 4 * $quantity;
-    $total = $total + $toppings_price;
+    if ($top == "mushrooms") {
+        $toppings_price = 4 * $quantity;
+        $total = $total + $toppings_price;
+        unset($toppings_price);
+    }
 }
 
 $values = array(
