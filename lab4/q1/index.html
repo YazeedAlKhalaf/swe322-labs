@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Q1: Order Food Online</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const foodRadios = document.getElementsByName("food");
+        const pizzaSizeDiv = document.getElementById("pizza-size-div");
+        const pizzaSizeSelect = document.getElementById("pizza-size");
+
+        pizzaSizeDiv.style.display = "none"; // Hide pizza size by default
+
+        function onFoodChange() {
+          if (document.getElementById("pizza").checked) {
+            pizzaSizeDiv.style.display = "block";
+          } else {
+            pizzaSizeDiv.style.display = "none";
+          }
+        }
+
+        for (let radio of foodRadios) {
+          radio.addEventListener("change", onFoodChange);
+        }
+      });
+    </script>
+  </head>
+
+  <body class="m-auto max-w-[48rem]">
+    <h1 class="font-bold text-3xl my-8">Order Food Online</h1>
+
+    <form action="display.php" method="post" class="flex flex-col gap-2 mb-4">
+      <div class="flex flex-col gap-1">
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="border-2 border-gray-500 rounded-md p-1"
+          required
+        />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          class="border-2 border-gray-500 rounded-md p-1"
+          required
+        />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="phone">Phone:</label>
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          class="border-2 border-gray-500 rounded-md p-1"
+          required
+        />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="address">Address:</label>
+        <textarea
+          type="tel"
+          name="address"
+          id="address"
+          class="border-2 border-gray-500 rounded-md p-1"
+          required
+        ></textarea>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p>Select Food:</p>
+        <label>
+          <input type="radio" name="food" id="pizza" value="pizza" />
+          Pizza (10$-20$)
+        </label>
+        <label>
+          <input type="radio" name="food" value="burger" /> Burger ($12)
+        </label>
+        <label>
+          <input type="radio" name="food" value="pasta" /> Pasta ($8)
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-1" id="pizza-size-div">
+        <label for="pizza-size">Pizza Size:</label>
+        <select
+          name="pizza-size"
+          id="pizza-size"
+          class="border-2 border-gray-500 rounded-md p-1"
+        >
+          <option value="small">Small ($10)</option>
+          <option value="medium">Medium ($15)</option>
+          <option value="large">Large ($20)</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p>Extra Toppings:</p>
+        <label>
+          <input type="checkbox" name="toppings[]" value="cheese" /> Cheese ($3)
+        </label>
+        <label>
+          <input type="checkbox" name="toppings[]" value="pepperoni" />
+          Pepperoni ($2)
+        </label>
+        <label>
+          <input type="checkbox" name="toppings[]" value="mushrooms" />
+          Mushrooms ($4)
+        </label>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label for="quantity">Quantity:</label>
+        <input
+          type="number"
+          name="quantity"
+          id="quantity"
+          class="border-2 border-gray-500 rounded-md p-1"
+          required
+        />
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <p>Delivery Preference:</p>
+        <label> <input type="radio" name="delivery" value="yes" /> Yes </label>
+        <label> <input type="radio" name="delivery" value="no" /> No </label>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <button type="submit" class="bg-blue-500 text-white rounded-md p-2">
+          Place Order
+        </button>
+      </div>
+    </form>
+  </body>
+</html>
