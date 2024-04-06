@@ -1,0 +1,36 @@
+# Compiled output
+*.log
+*.aux
+*.lof
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.lb
+*.dvi
+
+# BibTeX files
+*.bbl
+*.blg
+
+# LaTeX Workshop (VS Code extension) output
+*.synctex.gz
+*.synctex(busy)
+*.synctex.gz(busy)
+*.fls
+
+# VS Code project settings
+.vscode/
+
+# Other generated files
+*.fdb_latexmk
+*.snm
+*.nav
+*.vrb
+*.snm
+*.tdo
+*.xdv
