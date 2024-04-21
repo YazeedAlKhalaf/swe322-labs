@@ -10,5 +10,3 @@ Watermelon is our codename, we will probably change it to something better, or m
 -   Khaled Hazzam: 202111050
 
 ## Requirements
-
--   Laravel, do what you do with this information :D
