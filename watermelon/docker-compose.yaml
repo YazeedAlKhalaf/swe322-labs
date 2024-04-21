@@ -1,0 +1,13 @@
+services:
+  frontend:
+    image: watermelon/frontend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000:80
+    develop:
+      watch:
+        - path: ./src/
+          target: /var/www/html/
+          action: sync
