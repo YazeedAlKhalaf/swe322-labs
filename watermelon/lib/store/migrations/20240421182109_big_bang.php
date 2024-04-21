@@ -19,9 +19,6 @@ final class BigBang extends AbstractMigration
      */
     public function change(): void
     {
-        $dbName = $this->getAdapter()->getOption('name');
-        $this->execute("CREATE DATABASE IF NOT EXISTS `$dbName`");
-
         $table = $this->table('user');
         $table->addColumn('username', 'string')
             ->addColumn('password', 'string')
