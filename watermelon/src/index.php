@@ -18,7 +18,7 @@
 </head>
 
 <body class="flex flex-col min-h-screen">
-    <?php HeaderComponent() ?>
+    <?php HeaderComponent($landing_links) ?>
     <main class="flex-grow px-8">
         <div class="flex flex-col md:flex-row text-center md:text-start justify-between items-center">
             <div class="flex flex-col gap-2">
