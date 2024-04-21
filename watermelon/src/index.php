@@ -23,7 +23,7 @@
         <div class="flex flex-col md:flex-row text-center md:text-start justify-between items-center">
             <div class="flex flex-col gap-2">
                 <h1 class="text-green-600 font-bold text-5xl">Your go-to for attendance</br>and discipline!</h1>
-                <h3 class="text-gray-800">Both teachers and students love us :D</h3>
+                <h2 class="text-gray-800">Both teachers and students love us :D</h2>
                 <div>
                     <?php LinkButton('/', 'Get Started') ?>
                 </div>

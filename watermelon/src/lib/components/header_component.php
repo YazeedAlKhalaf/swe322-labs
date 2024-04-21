@@ -21,7 +21,7 @@ function HeaderComponent($links = array())
 ?>
     <header class="flex flex-row justify-between items-center p-4 bg-green-300">
         <a href="/">
-            <img src="/static/images/logo.svg" class="h-6" />
+            <img src="/static/images/logo.svg" class="h-6" alt="watermelon logo" />
         </a>
         <div class="flex flex-row gap-4 font-medium">
             <?php foreach ($links as $link) : ?>
