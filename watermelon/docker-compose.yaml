@@ -12,8 +12,6 @@ services:
       DB_PASS: ${DB_PASS}
       DB_NAME: ${DB_NAME}
       DB_PORT: ${DB_PORT:-3306}
-    volumes:
-      - .:/var/www/html
     depends_on:
       - database
 
