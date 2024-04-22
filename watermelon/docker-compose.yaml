@@ -16,7 +16,7 @@ services:
       - database
     develop:
       watch:
-        - path: ./src/
+        - path: .
           target: /var/www/html/
           action: sync
 
