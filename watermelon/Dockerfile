@@ -22,14 +22,17 @@ COPY . /var/www/html/
 # Set working directory
 WORKDIR /var/www/html/
 
-# Expose port 80
-EXPOSE 80
-
 # Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 
 # Make entrypoint script executable
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Install things in compose.json
+RUN composer install
+
+# Expose port 80
+EXPOSE 80
 
 # Set entrypoint
 ENTRYPOINT ["docker-entrypoint.sh"]
