@@ -19,12 +19,6 @@ services:
         - path: .
           target: /var/www/html/
           action: sync
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:80"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
 
   database:
     image: mysql:8.0
