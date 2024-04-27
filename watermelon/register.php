@@ -2,23 +2,45 @@
 require_once './lib/store/db.php';
 require_once './lib/services/AuthService.php';
 
+function validateInput($input, $minLength, $maxLength, $errorMessage)
+{
+    if ($input == "" || strlen($input) < $minLength || strlen($input) > $maxLength) {
+        return $errorMessage;
+    }
+    return null;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $authService = new AuthService($userStore);
 
-    $username = $_POST["username"];
-    $password = $_POST["password"];
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]);
 
-    try {
-        $didCreateAccount = $authService->register($username, $password);
-        if ($didCreateAccount) {
-            header("Location: login.php");
-            exit;
-        } else {
-            $errorMessage = "We failed to create an account for you. Please try again.";
+    $errorMessage = "";
+
+    $usernameError = validateInput($username, 3, 15, "• Username must be between 3 and 15 characters.");
+    if ($usernameError) {
+        $errorMessage .= ($errorMessage ? "<br />" : "") . $usernameError;
+    }
+
+    $passwordError = validateInput($password, 8, 64, "• Password must be between 8 and 64 characters.");
+    if ($passwordError) {
+        $errorMessage .= ($errorMessage ? "<br />" : "") . $passwordError;
+    }
+
+    if (!$errorMessage) {
+        try {
+            $didCreateAccount = $authService->register($username, $password);
+            if ($didCreateAccount) {
+                header("Location: login.php");
+                exit;
+            } else {
+                $errorMessage = "We failed to create an account for you. Please try again.";
+            }
+        } catch (Exception $e) {
+            $errorMessage = "An error occured while creating an account for your. Please try again later.";
+            error_log("Error registering user: " . $e->getMessage());
         }
-    } catch (Exception $e) {
-        $errorMessage = "An error occured while registering. Please try again later.";
-        error_log("Error registering user: " . $e->getMessage());
     }
 }
 ?>
@@ -26,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <?php include 'lib/components/button.php' ?>
 <?php include 'lib/components/header_component.php' ?>
 <?php include 'lib/components/footer_component.php' ?>
+<?php include 'lib/components/input.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -45,27 +68,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="flex flex-col min-h-screen">
     <?php HeaderComponent() ?>
     <main class="flex-grow px-8 flex flex-col justify-center items-center">
+        <h1 class="text-5xl font-bold text-center mb-4">Create an account</h1>
+
+        <?php if (isset($errorMessage)) : ?>
+            <div class="bg-red-200 text-red-800 py-2 px-4 rounded-lg mb-4">
+                <?php echo $errorMessage; ?>
+            </div>
+        <?php endif; ?>
+
         <form method="POST" class="flex flex-col justify-center items-center w-96 gap-4">
-            <?php if (isset($errorMessage)) : ?>
-                <div class="bg-red-200 text-red-800 py-2 px-4 rounded-lg mb-4">
-                    <?php echo $errorMessage; ?>
-                </div>
-            <?php endif; ?>
+            <?php Input("username", "username", "text", "Username", "", isset($username) ? $username : ''); ?>
 
-            <div class="flex flex-col w-full">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" class="border rounded-lg" required />
-            </div>
+            <?php PasswordInput("password", "password", "Password"); ?>
 
-            <div class="flex flex-col w-full">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" class="border rounded-lg" required />
-            </div>
-
-            <?php Button("Register", "submit", "w-full") ?>
+            <?php Button("Create an account", "submit", "w-full") ?>
         </form>
     </main>
     <?php FooterComponent() ?>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordVisibilityIcon_EyeOff = document.getElementById("password-visibility-icon_eye-off");
+            const passwordVisibilityIcon_Eye = document.getElementById("password-visibility-icon_eye");
+
+            const passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                passwordVisibilityIcon_EyeOff.setAttribute("class", "");
+                passwordVisibilityIcon_Eye.setAttribute("class", "hidden");
+            } else {
+                passwordField.type = "password";
+                passwordVisibilityIcon_EyeOff.setAttribute("class", "hidden");
+                passwordVisibilityIcon_Eye.setAttribute("class", "");
+            }
+        }
+    </script>
 </body>
 
 </html>
