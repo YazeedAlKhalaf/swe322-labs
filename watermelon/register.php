@@ -85,24 +85,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
     </main>
     <?php FooterComponent() ?>
-
-    <script>
-        function togglePasswordVisibility() {
-            const passwordVisibilityIcon_EyeOff = document.getElementById("password-visibility-icon_eye-off");
-            const passwordVisibilityIcon_Eye = document.getElementById("password-visibility-icon_eye");
-
-            const passwordField = document.getElementById("password");
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-                passwordVisibilityIcon_EyeOff.setAttribute("class", "");
-                passwordVisibilityIcon_Eye.setAttribute("class", "hidden");
-            } else {
-                passwordField.type = "password";
-                passwordVisibilityIcon_EyeOff.setAttribute("class", "hidden");
-                passwordVisibilityIcon_Eye.setAttribute("class", "");
-            }
-        }
-    </script>
 </body>
 
 </html>
