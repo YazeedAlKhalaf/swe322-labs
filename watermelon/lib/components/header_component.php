@@ -19,7 +19,7 @@ class HeaderLink
 function HeaderComponent($links = array())
 {
 ?>
-    <header class="flex flex-row justify-between items-center p-4 bg-green-300">
+    <header class="flex flex-row justify-between items-center p-4 bg-green-300 h-24">
         <a href="/">
             <img src="/static/images/logo.svg" class="h-6" alt="watermelon logo" />
         </a>

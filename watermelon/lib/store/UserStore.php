@@ -1,4 +1,11 @@
 <?php
+
+class User
+{
+    public string $username;
+    public string $password;
+}
+
 class UserStore
 {
     private Database $db;
@@ -12,12 +19,25 @@ class UserStore
     {
         $conn = $this->db->get_connection();
 
-        $stmt = $conn->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
-        $stmt->bind_param("ss", $username, $password);
-        return $stmt->execute();
+        $stmt_check = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
+        $stmt_check->bind_param("s", $username);
+        $stmt_check->execute();
+
+        $result = $stmt_check->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row['count'] > 0) {
+            return false;
+        }
+
+        $stmt_insert = $conn->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
+        $stmt_insert->bind_param("ss", $username, $password);
+        $success = $stmt_insert->execute();
+
+        return $success;
     }
 
-    public function getUserByUsername(string $username): ?array
+    public function getUserByUsername(string $username): ?User
     {
         $conn = $this->db->get_connection();
 
@@ -26,6 +46,16 @@ class UserStore
         $stmt->execute();
 
         $result = $stmt->get_result();
-        return $result->fetch_assoc();
+
+        $assoc = $result->fetch_assoc();
+        if (!$assoc) {
+            return null;
+        }
+
+        $user = new User();
+        $user->username = $assoc["username"];
+        $user->password = $assoc["password"];
+
+        return $user;
     }
 }
