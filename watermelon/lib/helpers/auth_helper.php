@@ -3,7 +3,7 @@
 function redirectToDashboardIfLoggedIn()
 {
     if (session_status() == PHP_SESSION_NONE) {
-        session_start();
+        startSecureSession();
     }
 
     if (isset($_SESSION['username'])) {
@@ -15,7 +15,7 @@ function redirectToDashboardIfLoggedIn()
 function redirectToLoginIfNotAuthenticated()
 {
     if (session_status() == PHP_SESSION_NONE) {
-        session_start();
+        startSecureSession();
     }
 
     if (!isset($_SESSION['username'])) {
@@ -35,7 +35,6 @@ function startSecureSession()
     }
 }
 
-
 function login($username)
 {
     startSecureSession();
@@ -48,7 +47,7 @@ function login($username)
 function logout()
 {
     if (session_status() == PHP_SESSION_NONE) {
-        session_start();
+        startSecureSession();
     }
 
     $_SESSION = [];

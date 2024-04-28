@@ -1,5 +1,6 @@
 <?php
 require_once './lib/helpers/auth_helper.php';
+startSecureSession();
 
 redirectToLoginIfNotAuthenticated();
 ?>
