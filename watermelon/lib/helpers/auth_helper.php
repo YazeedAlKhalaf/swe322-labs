@@ -2,9 +2,8 @@
 
 function redirectToDashboardIfLoggedIn()
 {
-    if (session_status() == PHP_SESSION_NONE) {
-        startSecureSession();
-    }
+    startSecureSession();
+
 
     if (isset($_SESSION['username'])) {
         header("Location: dashboard.php");
@@ -14,9 +13,8 @@ function redirectToDashboardIfLoggedIn()
 
 function redirectToLoginIfNotAuthenticated()
 {
-    if (session_status() == PHP_SESSION_NONE) {
-        startSecureSession();
-    }
+    startSecureSession();
+
 
     if (!isset($_SESSION['username'])) {
         header("Location: login.php");
@@ -35,20 +33,41 @@ function startSecureSession()
     }
 }
 
-function login($username)
+function login(string $username, string $accountType)
 {
     startSecureSession();
 
     $_SESSION["username"] = $username;
+    $_SESSION["accountType"] = $accountType;
 
     header("Location: dashboard.php");
 }
 
+class LoggedInSessionData
+{
+    public string $username;
+    public string $accountType;
+}
+
+function getLoggedInSessionData(): ?LoggedInSessionData
+{
+    startSecureSession();
+
+    if (!isset($_SESSION['username'])) {
+        return null;
+    }
+
+    $data = new LoggedInSessionData();
+    $data->username = $_SESSION["username"];
+    $data->accountType = $_SESSION["accountType"];
+
+    return $data;
+}
+
 function logout()
 {
-    if (session_status() == PHP_SESSION_NONE) {
-        startSecureSession();
-    }
+    startSecureSession();
+
 
     $_SESSION = [];
 

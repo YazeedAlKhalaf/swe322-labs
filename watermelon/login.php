@@ -38,13 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$errorMessage) {
         try {
-            $canLogin = $authService->login($username, $password);
-            if ($canLogin) {
-                login($username);
-                exit;
-            } else {
-                $errorMessage = "We failed to log you in. Please try again.";
-            }
+            $user = $authService->login($username, $password);
+
+            login($username, $user->account_type);
+            exit;
         } catch (Exception $e) {
             $errorMessage = "An error occurred while logging you in. Please try again later.";
             error_log("Error registering user: " . $e->getMessage());

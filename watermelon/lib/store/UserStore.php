@@ -5,8 +5,14 @@ class User
     public int $id;
     public string $username;
     public string $password;
+    public string $account_type;
 }
 
+class AccountType
+{
+    public const STUDENT = 'student';
+    public const TEACHER = 'teacher';
+}
 class UserStore
 {
     private Database $db;
@@ -16,8 +22,12 @@ class UserStore
         $this->db = $db;
     }
 
-    public function createUser(string $username, string $password): bool
+    public function createUser(string $username, string $password, string $account_type): bool
     {
+        if ($account_type !== AccountType::STUDENT && $account_type !== AccountType::TEACHER) {
+            throw new UserStoreException("Invalid account type", UserStoreException::ACCOUNT_TYPE_INVALID);
+        }
+
         $conn = $this->db->get_connection();
 
         $stmt_check = $conn->prepare("SELECT COUNT(*) as count FROM user WHERE username = ?");
@@ -34,12 +44,12 @@ class UserStore
             throw new UserStoreException("Username already exists", UserStoreException::USERNAME_ALREADY_USED);
         }
 
-        $stmt_insert = $conn->prepare("INSERT INTO user (username, password) VALUES (?, ?)");
+        $stmt_insert = $conn->prepare("INSERT INTO user (username, password, account_type) VALUES (?, ?, ?)");
         if (!$stmt_insert) {
             return false;
         }
 
-        $stmt_insert->bind_param("ss", $username, $password);
+        $stmt_insert->bind_param("sss", $username, $password, $account_type);
         $success = $stmt_insert->execute();
 
         return $success;
@@ -50,7 +60,7 @@ class UserStore
     {
         $conn = $this->db->get_connection();
 
-        $stmt = $conn->prepare("SELECT id, username, password FROM user WHERE username = ?");
+        $stmt = $conn->prepare("SELECT id, username, password, account_type FROM user WHERE username = ?");
         if (!$stmt) {
             return null;
         }
@@ -68,6 +78,7 @@ class UserStore
         $user->id = $assoc["id"];
         $user->username = $assoc["username"];
         $user->password = $assoc["password"];
+        $user->account_type = $assoc["account_type"];
 
         return $user;
     }
@@ -76,6 +87,7 @@ class UserStore
 class UserStoreException extends Exception
 {
     const USERNAME_ALREADY_USED = 1;
+    const ACCOUNT_TYPE_INVALID = 2;
 
     public function __construct($message, $code = 0, Exception $previous = null)
     {

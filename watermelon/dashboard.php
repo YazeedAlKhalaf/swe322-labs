@@ -4,6 +4,8 @@ startSecureSession();
 
 redirectToLoginIfNotAuthenticated();
 
+$loggedInSessionData = getLoggedInSessionData();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
     logout();
 }
@@ -31,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
 <body class="flex flex-col min-h-screen">
     <?php HeaderComponent() ?>
     <main class="flex-grow px-8 flex flex-col justify-center items-center">
-        <h1>Welcome to the dashboard, <?php echo $_SESSION['username']; ?>!</h1>
+        <h1 class="text-3xl font-bold text-center">Welcome to the dashboard, <?php echo $loggedInSessionData->username; ?>!</h1>
+        <h2 class="text-xl font-semibold text-center">Account Type: <?php echo $loggedInSessionData->accountType; ?></h2>
         <form method="POST">
             <button type="submit" name="logout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">Logout</button>
         </form>

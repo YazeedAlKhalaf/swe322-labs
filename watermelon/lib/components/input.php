@@ -3,7 +3,7 @@ function Input($id, $name, $type, $label, $placeholder = '', $value = '', $addit
 {
 ?>
     <div class="flex flex-col w-full mb-4">
-        <label for="<?php echo $id; ?>" class="mb-1"><?php echo $label; ?></label>
+        <label for="<?php echo $id; ?>" class="font-semibold mb-1"><?php echo $label; ?></label>
         <input type="<?php echo $type; ?>" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="border rounded-lg py-2 px-4 <?php echo $additionalClasses; ?>" placeholder="<?php echo $placeholder; ?>" value="<?php echo htmlentities($value); ?>" />
     </div>
 <?php
@@ -15,7 +15,7 @@ function PasswordInput($id, $name, $label, $placeholder = '', $value = '')
 {
 ?>
     <div class="flex flex-col w-full mb-4">
-        <label for="<?php echo $id; ?>" class="mb-1"><?php echo $label; ?></label>
+        <label for="<?php echo $id; ?>" class="font-semibold mb-1"><?php echo $label; ?></label>
         <div class="relative">
             <input type="password" id="<?php echo $id; ?>" name="<?php echo $name; ?>" class="border rounded-lg py-2 px-4 pr-12 w-full" placeholder="<?php echo $placeholder; ?>" value="<?php echo htmlentities($value); ?>" required />
             <span class="absolute inset-y-0 right-0 flex items-center justify-center pr-3 cursor-pointer w-10 h-10 toggle-password-visibility" data-target="<?php echo $id; ?>">

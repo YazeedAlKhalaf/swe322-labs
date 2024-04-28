@@ -23,8 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = trim($_POST["username"]);
     $password = trim($_POST["password"]);
+    $accountType = $_POST["account_type"];
 
     $errorMessage = "";
+
+    if ($accountType != "student" && $accountType != "teacher") {
+        $errorMessage .= ($errorMessage ? "<br />" : "") . "Account type is invalid.";
+    }
 
     $usernameError = validateInput($username, 3, 15, "• Username must be between 3 and 15 characters.");
     if ($usernameError) {
@@ -38,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$errorMessage) {
         try {
-            $didCreateAccount = $authService->register($username, $password);
+            $didCreateAccount = $authService->register($username, $password, $accountType);
             if ($didCreateAccount) {
-                login($username);
+                login($username, $accountType);
                 exit;
             } else {
                 $errorMessage = "We failed to create an account for you. Please try again.";
@@ -50,6 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $errorMessage .= ($errorMessage ? "<br />" : "") . "• Username is already used.";
             } elseif ($e->getCode() === AuthServiceException::INVALID_USERNAME_OR_PASSWORD) {
                 $errorMessage .= ($errorMessage ? "<br />" : "") . "• Invalid username or password.";
+            } elseif ($e->getCode() === AuthServiceException::ACCOUNT_TYPE_INVALID) {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Invalid account type selected.";
             } else {
                 $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account. Please try again later.";
             }
@@ -96,6 +103,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php Input("username", "username", "text", "Username", "", isset($username) ? $username : ''); ?>
 
             <?php PasswordInput("password", "password", "Password"); ?>
+
+            <div class="flex flex-col items-start w-full">
+                <span class="font-semibold">Account Type:</span>
+                <label class="inline-flex items-center mt-2">
+                    <input type="radio" class="form-radio h-5 w-5 text-gray-600" name="account_type" value="student" checked>
+                    <span class="ml-2 text-gray-700">Student</span>
+                </label>
+                <label class="inline-flex items-center mt-2">
+                    <input type="radio" class="form-radio h-5 w-5 text-gray-600" name="account_type" value="teacher">
+                    <span class="ml-2 text-gray-700">Teacher</span>
+                </label>
+            </div>
 
             <?php Button("Create an account", "submit", "w-full") ?>
         </form>
