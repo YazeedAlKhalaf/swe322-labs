@@ -3,6 +3,10 @@ require_once './lib/helpers/auth_helper.php';
 startSecureSession();
 
 redirectToLoginIfNotAuthenticated();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
+    logout();
+}
 ?>
 
 <?php include 'lib/components/button.php' ?>
@@ -27,7 +31,10 @@ redirectToLoginIfNotAuthenticated();
 <body class="flex flex-col min-h-screen">
     <?php HeaderComponent() ?>
     <main class="flex-grow px-8 flex flex-col justify-center items-center">
-        <h1>You are in the dashbaord :D</h1>
+        <h1>Welcome to the dashboard, <?php echo $_SESSION['username']; ?>!</h1>
+        <form method="POST">
+            <button type="submit" name="logout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">Logout</button>
+        </form>
     </main>
     <?php FooterComponent() ?>
 </body>
