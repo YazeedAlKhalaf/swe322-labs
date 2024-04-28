@@ -24,8 +24,9 @@
             <div class="flex flex-col gap-2">
                 <h1 class="text-green-600 font-bold text-5xl">Your go-to for attendance</br>and discipline!</h1>
                 <h2 class="text-gray-800">Both teachers and students love us :D</h2>
-                <div>
-                    <?php LinkButton('/', 'Get Started') ?>
+                <div class="flex flex-row gap-4">
+                    <?php LinkButton('/login.php', 'Login') ?>
+                    <?php LinkButton('/register.php', 'Register') ?>
                 </div>
             </div>
             <img src="/static/images/landing/man-scanning-qr-code.png" class="h-96" />
