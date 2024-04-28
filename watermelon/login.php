@@ -38,23 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$errorMessage) {
         try {
-            $didCreateAccount = $authService->register($username, $password);
-            if ($didCreateAccount) {
+            $canLogin = $authService->login($username, $password);
+            if ($canLogin) {
                 login($username);
                 exit;
             } else {
-                $errorMessage = "We failed to create an account for you. Please try again.";
-            }
-        } catch (AuthServiceException $e) {
-            if ($e->getCode() === AuthServiceException::USERNAME_ALREADY_USED) {
-                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Username is already used.";
-            } elseif ($e->getCode() === AuthServiceException::INVALID_USERNAME_OR_PASSWORD) {
-                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Invalid username or password.";
-            } else {
-                $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account. Please try again later.";
+                $errorMessage = "We failed to log you in. Please try again.";
             }
         } catch (Exception $e) {
-            $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account for you. Please try again later.";
+            $errorMessage = "An error occurred while logging you in. Please try again later.";
             error_log("Error registering user: " . $e->getMessage());
         }
     }
@@ -84,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="flex flex-col min-h-screen">
     <?php HeaderComponent() ?>
     <main class="flex-grow px-8 flex flex-col justify-center items-center">
-        <h1 class="text-5xl font-bold text-center mb-4">Create an account</h1>
+        <h1 class="text-5xl font-bold text-cente mb-4">Login</h1>
 
         <?php if (isset($errorMessage)) : ?>
             <div class="bg-red-200 text-red-800 py-2 px-4 rounded-lg mb-4">
@@ -97,7 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <?php PasswordInput("password", "password", "Password"); ?>
 
-            <?php Button("Create an account", "submit", "w-full") ?>
+            <?php Button("Login", "submit", "w-full") ?>
         </form>
     </main>
     <?php FooterComponent() ?>
