@@ -37,8 +37,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             } else {
                 $errorMessage = "We failed to create an account for you. Please try again.";
             }
+        } catch (AuthServiceException $e) {
+            if ($e->getCode() === AuthServiceException::USERNAME_ALREADY_USED) {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Username is already used.";
+            } elseif ($e->getCode() === AuthServiceException::INVALID_USERNAME_OR_PASSWORD) {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Invalid username or password.";
+            } else {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account. Please try again later.";
+            }
         } catch (Exception $e) {
-            $errorMessage = "An error occured while creating an account for your. Please try again later.";
+            $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occured while creating an account for your. Please try again later.";
             error_log("Error registering user: " . $e->getMessage());
         }
     }

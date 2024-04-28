@@ -11,21 +11,47 @@ class AuthService
 
     public function register(string $username, string $password): bool
     {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $result = $this->userStore->createUser($username, $hashed_password);
-
-        return $result;
+        try {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $result = $this->userStore->createUser($username, $hashed_password);
+            return $result;
+        } catch (UserStoreException $e) {
+            if ($e->getCode() === UserStoreException::USERNAME_ALREADY_USED) {
+                throw new AuthServiceException("Username already exists", AuthServiceException::USERNAME_ALREADY_USED);
+            } else {
+                throw $e;
+            }
+        }
     }
 
     public function login(string $username, string $password): bool
     {
-        $user = $this->userStore->getUserByUsername($username);
-        if ($user == null) {
-            return false;
+        try {
+            $user = $this->userStore->getUserByUsername($username);
+            if ($user == null) {
+                throw new AuthServiceException("User not found", AuthServiceException::INVALID_USERNAME_OR_PASSWORD);
+            }
+
+            $result = password_verify($password, $user->password);
+            if (!$result) {
+                throw new AuthServiceException("Invalid password", AuthServiceException::INVALID_USERNAME_OR_PASSWORD);
+            }
+
+            return true;
+        } catch (Exception $e) {
+            throw new AuthServiceException("Authentication failed", $e->getCode(), $e);
         }
+    }
+}
 
-        $result = password_verify($password, $user->password);
 
-        return $result;
+class AuthServiceException extends Exception
+{
+    const USERNAME_ALREADY_USED = 1;
+    const INVALID_USERNAME_OR_PASSWORD = 2;
+
+    public function __construct($message, $code = 0, Exception $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
     }
 }
