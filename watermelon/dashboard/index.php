@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                 </div>
             <?php endif; ?>
 
-            <div>
+            <div class="max-w-96 w-full mt-4">
                 <?php if (empty($classes)) : ?>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
                         <h2 class="text-xl font-semibold">No classes available</h2>
