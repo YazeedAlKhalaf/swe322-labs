@@ -11,6 +11,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
 }
 ?>
 
+<?php
+require_once '../lib/store/db.php';
+require_once '../../lib/services/TeacherService.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+
+    if ($loggedInSessionData->accountType === AccountType::TEACHER) {
+        $teacherService = new TeacherService($classStore, $sessionStore);
+
+        $classes = $teacherService->getClasses($loggedInSessionData->id);
+    }
+}
+?>
+
 <?php require_once '../lib/components/button.php' ?>
 <?php require_once '../lib/components/header_component.php' ?>
 <?php require_once '../lib/components/footer_component.php' ?>
@@ -38,9 +52,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
         <form method="POST">
             <button type="submit" name="logout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">Logout</button>
         </form>
-        <div class="m-4">
-            <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
-        </div>
+
+        <?php if ($loggedInSessionData->accountType === AccountType::TEACHER) : ?>
+            <div class="m-4">
+                <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
+            </div>
+
+            <div>
+                <?php foreach ($classes as $class) : ?>
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <h2 class="text-xl font-semibold"><?php echo $class->name ?></h2>
+                        <h3 class="text-gray-700"><?php echo $class->description ?></h3>
+                        <p class="text-gray-700"><?php echo $class->password ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($loggedInSessionData->accountType === AccountType::STUDENT) : ?>
+            <div class="m-4">
+                <h1>This is only shown to the student!!!</h1>
+            </div>
+        <?php endif; ?>
+
     </main>
     <?php FooterComponent() ?>
 </body>

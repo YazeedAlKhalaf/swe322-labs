@@ -33,6 +33,18 @@ class TeacherService
 
         return $createdSession;
     }
+
+    /**
+     * Retrieves a list of Clazz objects.
+     *
+     * @return Clazz[] An array of Clazz objects.
+     */
+    public function getClasses(int $teacher_id): array
+    {
+        $classes = $this->classStore->getClassesByTeacherId($teacher_id);
+
+        return $classes;
+    }
 }
 
 class TeacherServiceException extends Exception

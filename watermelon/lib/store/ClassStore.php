@@ -30,7 +30,6 @@ class ClassStore
 
         $stmt->bind_param("ssss", $name, $teacher_id, $description, $password);
         $success = $stmt->execute();
-
         if (!$success) {
             return null;
         }
@@ -55,5 +54,37 @@ class ClassStore
         }
 
         return null;
+    }
+
+    public function getClassesByTeacherId(int $teacher_id): array
+    {
+        $conn = $this->db->get_connection();
+        $stmt = $conn->prepare("SELECT * FROM class WHERE teacher_id = ?");
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $teacher_id);
+        $success = $stmt->execute();
+        if (!$success) {
+            return null;
+        }
+
+        $result = $stmt->get_result();
+
+        $classes = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $clazz = new Clazz();
+            $clazz->id = $row['id'];
+            $clazz->name = $row['name'];
+            $clazz->teacher_id = $row['teacher_id'];
+            $clazz->description = $row['description'];
+            $clazz->password = $row['password'];
+            $clazz->created_at = new DateTime($row['created_at']);
+
+            $classes[] = $clazz;
+        }
+
+        return $classes;
     }
 }
