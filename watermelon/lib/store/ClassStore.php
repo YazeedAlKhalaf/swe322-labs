@@ -28,7 +28,7 @@ class ClassStore
             return null;
         }
 
-        $stmt->bind_param("ssss", $name, $teacher_id, $description, $password);
+        $stmt->bind_param("siss", $name, $teacher_id, $description, $password);
         $success = $stmt->execute();
         if (!$success) {
             return null;

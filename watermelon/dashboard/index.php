@@ -16,7 +16,6 @@ require_once '../lib/store/db.php';
 require_once '../lib/services/TeacherService.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-
     if ($loggedInSessionData->accountType === AccountType::TEACHER) {
         $teacherService = new TeacherService($classStore, $sessionStore);
 

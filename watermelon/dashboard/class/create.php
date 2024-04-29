@@ -5,6 +5,8 @@ startSecureSession();
 
 redirectToLoginIfNotAuthenticated();
 redirectToDashboardIfNotTeacher();
+
+$loggedInSessionData = getLoggedInSessionData();
 ?>
 
 <?php
@@ -37,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$errorMessage) {
         try {
-            $clazz = $teacherService->createClass($name, 1, $description, $invitationCode);
+            $clazz = $teacherService->createClass($name, $loggedInSessionData->id, $description, $invitationCode);
 
             header("Location: /dashboard/class/?id=" . $clazz->id);
             exit;
