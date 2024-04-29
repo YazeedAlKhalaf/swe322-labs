@@ -11,9 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
 }
 ?>
 
-<?php include '../lib/components/button.php' ?>
-<?php include '../lib/components/header_component.php' ?>
-<?php include '../lib/components/footer_component.php' ?>
+<?php require_once '../lib/components/button.php' ?>
+<?php require_once '../lib/components/header_component.php' ?>
+<?php require_once '../lib/components/footer_component.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,12 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <?php include '../lib/components/head/meta.php' ?>
-    <?php include '../lib/components/head/facebook_meta.php' ?>
-    <?php include '../lib/components/head/twitter_meta.php' ?>
+    <?php require_once '../lib/components/head/meta.php' ?>
+    <?php require_once '../lib/components/head/facebook_meta.php' ?>
+    <?php require_once '../lib/components/head/twitter_meta.php' ?>
 
-    <?php include '../lib/components/head/favicon.php' ?>
-    <?php include '../lib/components/head/tailwind_css.php' ?>
+    <?php require_once '../lib/components/head/favicon.php' ?>
+    <?php require_once '../lib/components/head/tailwind_css.php' ?>
 </head>
 
 <body class="flex flex-col min-h-screen">
@@ -38,6 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
         <form method="POST">
             <button type="submit" name="logout" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mt-4">Logout</button>
         </form>
+        <div class="m-4">
+            <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
+        </div>
     </main>
     <?php FooterComponent() ?>
 </body>

@@ -1,4 +1,6 @@
 <?php
+$commonPath = realpath(dirname(__FILE__) . '/../common');
+require_once $commonPath . '/account_type.php';
 
 class User
 {
@@ -8,11 +10,6 @@ class User
     public string $account_type;
 }
 
-class AccountType
-{
-    public const STUDENT = 'student';
-    public const TEACHER = 'teacher';
-}
 class UserStore
 {
     private Database $db;

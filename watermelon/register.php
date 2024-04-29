@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errorMessage = "";
 
     if ($accountType != "student" && $accountType != "teacher") {
-        $errorMessage .= ($errorMessage ? "<br />" : "") . "Account type is invalid.";
+        $errorMessage .= ($errorMessage ? "<br />" : "") . "• Account type is invalid.";
     }
 
     $usernameError = validateInput($username, 3, 15, "• Username must be between 3 and 15 characters.");
@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (!$errorMessage) {
         try {
-            $didCreateAccount = $authService->register($username, $password, $accountType);
-            if ($didCreateAccount) {
-                login($username, $accountType);
+            $user = $authService->register($username, $password, $accountType);
+            if ($user) {
+                login($user->id, $username, $accountType);
                 exit;
             } else {
                 $errorMessage = "We failed to create an account for you. Please try again.";
@@ -117,6 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <?php Button("Create an account", "submit", "w-full") ?>
+
+            <div class="flex flex-row justify-center items-center w-full">
+                <a href="/login.php" class="text-lime-700 font-medium hover:text-lime-500 transition-all">Already have an account? Login</a>
+            </div>
         </form>
     </main>
     <?php FooterComponent() ?>

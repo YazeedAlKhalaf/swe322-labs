@@ -40,10 +40,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $user = $authService->login($username, $password);
 
-            login($username, $user->account_type);
+            login($user->id, $username, $user->account_type);
             exit;
+        } catch (AuthServiceException $e) {
+            if ($e->getCode() === AuthServiceException::INVALID_USERNAME_OR_PASSWORD) {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• Invalid username or password.";
+            } else {
+                $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account for you. Please try again later.";
+            }
         } catch (Exception $e) {
-            $errorMessage = "An error occurred while logging you in. Please try again later.";
+            $errorMessage .= ($errorMessage ? "<br />" : "") . "• An error occurred while creating an account for you. Please try again later.";
             error_log("Error registering user: " . $e->getMessage());
         }
     }
@@ -87,6 +93,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php PasswordInput("password", "password", "Password"); ?>
 
             <?php Button("Login", "submit", "w-full") ?>
+
+            <div class="flex flex-row justify-center items-center w-full">
+                <a href="/register.php" class="text-lime-700 font-medium hover:text-lime-500 transition-all">Don't have an account? Register</a>
+            </div>
         </form>
     </main>
     <?php FooterComponent() ?>

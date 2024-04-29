@@ -1,4 +1,6 @@
 <?php
+$commonPath = realpath(dirname(__FILE__) . '/../common');
+require_once $commonPath . '/account_type.php';
 
 function redirectToDashboardIfLoggedIn()
 {
@@ -6,7 +8,7 @@ function redirectToDashboardIfLoggedIn()
 
 
     if (isset($_SESSION['username'])) {
-        header("Location: dashboard");
+        header("Location: /dashboard");
         exit;
     }
 }
@@ -17,7 +19,7 @@ function redirectToLoginIfNotAuthenticated()
 
 
     if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
+        header("Location: /login.php");
         exit;
     }
 }
@@ -33,18 +35,20 @@ function startSecureSession()
     }
 }
 
-function login(string $username, string $accountType)
+function login(string $id, string $username, string $accountType)
 {
     startSecureSession();
 
+    $_SESSION["id"] = $id;
     $_SESSION["username"] = $username;
     $_SESSION["accountType"] = $accountType;
 
-    header("Location: dashboard");
+    header("Location: /dashboard");
 }
 
 class LoggedInSessionData
 {
+    public int $id;
     public string $username;
     public string $accountType;
 }
@@ -58,6 +62,7 @@ function getLoggedInSessionData(): ?LoggedInSessionData
     }
 
     $data = new LoggedInSessionData();
+    $data->id = $_SESSION["id"];
     $data->username = $_SESSION["username"];
     $data->accountType = $_SESSION["accountType"];
 
@@ -87,6 +92,24 @@ function logout()
 
     session_destroy();
 
-    header("Location: login.php");
+    header("Location: /login.php");
     exit;
+}
+
+function redirectToDashboardIfNotTeacher()
+{
+    $loggedInSessionData = getLoggedInSessionData();
+
+    if ($loggedInSessionData->accountType != AccountType::TEACHER) {
+        header("Location: /dashboard");
+    }
+}
+
+function redirectToDashboardIfNotStudent()
+{
+    $loggedInSessionData = getLoggedInSessionData();
+
+    if ($loggedInSessionData->accountType != AccountType::STUDENT) {
+        header("Location: /dashboard");
+    }
 }

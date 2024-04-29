@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/UserStore.php';
+require_once __DIR__ . '/ClassStore.php';
+require_once __DIR__ . '/SessionStore.php';
 
 class Database
 {
@@ -31,4 +33,7 @@ $db_name = getenv("DB_NAME") ?: "database_name";
 $db_port = getenv("DB_PORT");
 
 $database = new Database($db_host, $db_user, $db_pass, $db_name, $db_port);
+
 $userStore = new UserStore($database);
+$classStore = new ClassStore($database);
+$sessionStore = new SessionStore($database);

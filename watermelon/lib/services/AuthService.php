@@ -9,12 +9,17 @@ class AuthService
         $this->userStore = $userStore;
     }
 
-    public function register(string $username, string $password, string $account_type): bool
+    public function register(string $username, string $password, string $account_type): ?User
     {
         try {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $result = $this->userStore->createUser($username, $hashed_password, $account_type);
-            return $result;
+            if (!$result) {
+                return null;
+            }
+
+            $user = $this->userStore->getUserByUsername($username);
+            return $user;
         } catch (UserStoreException $e) {
             if ($e->getCode() === UserStoreException::USERNAME_ALREADY_USED) {
                 throw new AuthServiceException("Username already exists", AuthServiceException::USERNAME_ALREADY_USED);
