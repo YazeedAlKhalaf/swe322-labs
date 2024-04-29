@@ -54,18 +54,30 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         </form>
 
         <?php if ($loggedInSessionData->accountType === AccountType::TEACHER) : ?>
-            <div class="m-4">
-                <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
-            </div>
+            <?php if (!empty($classes)) : ?>
+                <div class="m-4">
+                    <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
+                </div>
+            <?php endif; ?>
 
             <div>
-                <?php foreach ($classes as $class) : ?>
+                <?php if (empty($classes)) : ?>
                     <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                        <h2 class="text-xl font-semibold"><?php echo $class->name ?></h2>
-                        <h3 class="text-gray-700"><?php echo $class->description ?></h3>
-                        <p class="text-gray-700"><?php echo $class->password ?></p>
+                        <h2 class="text-xl font-semibold">No classes available</h2>
+                        <p class="text-gray-700">You have not created any classes yet.</p>
+                        <div class="m-4">
+                            <?php LinkButton("/dashboard/class/create.php", "+ Create Class") ?>
+                        </div>
                     </div>
-                <?php endforeach; ?>
+                <?php else : ?>
+                    <?php foreach ($classes as $class) : ?>
+                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                            <h2 class="text-xl font-semibold"><?php echo $class->name ?></h2>
+                            <h3 class="text-gray-700"><?php echo $class->description ?></h3>
+                            <p class="text-gray-700"><?php echo $class->password ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
