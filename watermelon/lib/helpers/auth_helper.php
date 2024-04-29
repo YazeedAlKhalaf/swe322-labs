@@ -6,7 +6,7 @@ function redirectToDashboardIfLoggedIn()
 
 
     if (isset($_SESSION['username'])) {
-        header("Location: dashboard.php");
+        header("Location: dashboard");
         exit;
     }
 }
@@ -40,7 +40,7 @@ function login(string $username, string $accountType)
     $_SESSION["username"] = $username;
     $_SESSION["accountType"] = $accountType;
 
-    header("Location: dashboard.php");
+    header("Location: dashboard");
 }
 
 class LoggedInSessionData
