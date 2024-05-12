@@ -7,11 +7,13 @@ class TeacherService
 {
     private ClassStore $classStore;
     private SessionStore $sessionStore;
+    private UserStore $userStore;
 
-    public function __construct(ClassStore $classStore, SessionStore $sessionStore)
+    public function __construct(ClassStore $classStore, SessionStore $sessionStore, UserStore $userStore)
     {
         $this->classStore = $classStore;
         $this->sessionStore = $sessionStore;
+        $this->userStore = $userStore;
     }
 
     public function createClass(string $name, int $teacher_id, ?string $description, string $password): Clazz
@@ -44,6 +46,11 @@ class TeacherService
         $classes = $this->classStore->getClassesByTeacherId($teacher_id);
 
         return $classes;
+    }
+
+    public function getStudentsBySessionId(int $session_id): array
+    {
+        return $this->userStore->getStudentsBySessionId($session_id);
     }
 }
 

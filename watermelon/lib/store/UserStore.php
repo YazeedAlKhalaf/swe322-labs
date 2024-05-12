@@ -79,6 +79,76 @@ class UserStore
 
         return $user;
     }
+
+    /**
+     * Retrieves a list of User objects.
+     *
+     * @return User[] An array of User objects.
+     */
+    public function getStudentsByClassId(int $class_id): array
+    {
+        $conn = $this->db->get_connection();
+        $stmt = $conn->prepare("SELECT user.id, user.username, user.password, user.account_type FROM user JOIN student_class ON student_class.student_id = user.id WHERE student_class.class_id = ?");
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $class_id);
+        $success = $stmt->execute();
+        if (!$success) {
+            return null;
+        }
+
+        $result = $stmt->get_result();
+
+        $classes = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $clazz = new User();
+            $clazz->id = $row['id'];
+            $clazz->username = $row['username'];
+            $clazz->password = $row['password'];;
+            $clazz->account_type = $row['account_type'];;
+
+            $classes[] = $clazz;
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Retrieves a list of User objects.
+     *
+     * @return User[] An array of User objects.
+     */
+    public function getStudentsBySessionId(int $session_id): array
+    {
+        $conn = $this->db->get_connection();
+        $stmt = $conn->prepare("SELECT user.id, user.username, user.password, user.account_type FROM user JOIN student_session ON student_session.student_id = user.id WHERE student_session.session_id = ?");
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $session_id);
+        $success = $stmt->execute();
+        if (!$success) {
+            return null;
+        }
+
+        $result = $stmt->get_result();
+
+        $classes = [];
+        while ($row = mysqli_fetch_assoc($result)) {
+            $clazz = new User();
+            $clazz->id = $row['id'];
+            $clazz->username = $row['username'];
+            $clazz->password = $row['password'];;
+            $clazz->account_type = $row['account_type'];;
+
+            $classes[] = $clazz;
+        }
+
+        return $classes;
+    }
 }
 
 class UserStoreException extends Exception

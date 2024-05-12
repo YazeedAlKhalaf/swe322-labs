@@ -73,4 +73,47 @@ class SessionStore
             return null;
         }
     }
+
+    public function getSessionById(int $session_id): ?Session
+    {
+        $conn = $this->db->get_connection();
+
+        $stmt = $conn->prepare("SELECT * FROM session WHERE id = ?");
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $session_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $session = new Session();
+            $session->id = $row['id'];
+            $session->class_id = $row['class_id'];
+            $session->start_datetime = new DateTime($row['start_datetime']);
+            $session->end_datetime = new DateTime($row['end_datetime']);
+            $session->location = $row['location'];
+            $session->created_at = new DateTime($row['created_at']);
+            return $session;
+        }
+
+        return null;
+    }
+
+    public function attendStudentInSession(int $session_id, int $student_id): bool
+    {
+        $conn = $this->db->get_connection();
+
+        $stmt = $conn->prepare("INSERT INTO student_session (session_id, student_id) VALUES (?, ?)");
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("ii", $session_id, $student_id);
+        $success = $stmt->execute();
+
+        return $success;
+    }
 }

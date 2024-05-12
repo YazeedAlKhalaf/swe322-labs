@@ -14,7 +14,7 @@ require_once '../../lib/store/db.php';
 require_once '../../lib/services/TeacherService.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $teacherService = new TeacherService($classStore, $sessionStore);
+    $teacherService = new TeacherService($classStore, $sessionStore, $userStore);
 
     $name = trim($_POST["name"]);
     $description = trim($_POST["description"]);

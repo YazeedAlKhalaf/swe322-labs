@@ -14,12 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["logout"])) {
 <?php
 require_once '../lib/store/db.php';
 require_once '../lib/services/TeacherService.php';
+require_once '../lib/services/StudentService.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if ($loggedInSessionData->accountType === AccountType::TEACHER) {
-        $teacherService = new TeacherService($classStore, $sessionStore);
+        $teacherService = new TeacherService($classStore, $sessionStore, $userStore);
 
         $classes = $teacherService->getClasses($loggedInSessionData->id);
+    } else if ($loggedInSessionData->accountType === AccountType::STUDENT) {
+        $studentService = new StudentService($classStore, $sessionStore);
+
+        $classes = $studentService->getClasses($loggedInSessionData->id);
     }
 }
 ?>
@@ -27,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 <?php require_once '../lib/components/button.php' ?>
 <?php require_once '../lib/components/header_component.php' ?>
 <?php require_once '../lib/components/footer_component.php' ?>
+<?php require_once '../lib/components/class_card.php' ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,13 +75,11 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
                         </div>
                     </div>
                 <?php else : ?>
-                    <?php foreach ($classes as $class) : ?>
-                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-                            <h2 class="text-xl font-semibold"><?php echo $class->name ?></h2>
-                            <h3 class="text-gray-700"><?php echo $class->description ?></h3>
-                            <p class="text-gray-700"><?php echo $class->password ?></p>
-                        </div>
-                    <?php endforeach; ?>
+                    <div class="grid grid-cols-2 gap-4">
+                        <?php foreach ($classes as $class) : ?>
+                            <?php ClassCard($class) ?>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             </div>
         <?php endif; ?>
@@ -83,6 +87,24 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <?php if ($loggedInSessionData->accountType === AccountType::STUDENT) : ?>
             <div class="m-4">
                 <h1>This is only shown to the student!!!</h1>
+            </div>
+
+            <div class="max-w-96 w-full mt-4">
+                <?php if (empty($classes)) : ?>
+                    <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                        <h2 class="text-xl font-semibold">No classes available</h2>
+                        <p class="text-gray-700">You have not joined any classes yet.</p>
+                        <div class="m-4">
+                            <?php LinkButton("/dashboard/class/join.php", "+ Join Class") ?>
+                        </div>
+                    </div>
+                <?php else : ?>
+                    <div class="grid grid-cols-2 gap-4">
+                        <?php foreach ($classes as $class) : ?>
+                            <?php ClassCard($class) ?>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         <?php endif; ?>
 
